@@ -1,37 +1,63 @@
+<div class="w-4/4 shadow-md p-10 bg-white shadow-blue-200/20 mx-36 my-10">
+  <div class="flex justify-between items-center mb-4 mt-4">
+    <input
+      class="w-full border p-2 rounded-lg"
+      type="text"
+      placeholder="search"
+      name=""
+      id=""
+    />
+    <select class="border p-2 rounded-lg">
+      <option value="">Test</option>
+    </select>
+  </div>
 
-<div class="w-4/4 shadow-md p-10 bg-white shadow-blue-200/20 mx-36 my-10 ">
-<div class="flex justify-between items-center mb-4 mt-4">
-<input class="w-full border p-2 rounded-lg" type="text" placeholder="search" name="" id="">
-<select class="border p-2 rounded-lg">
-    <option value="">Test</option>
-</select>
-</div>
-
-<table class="w-full border-4">
+  <table class="w-full border-4">
     <thead>
-        <tr>
-            <th class="p-3 text-left bg-gray-200">#</th>
-            <th class="p-3 text-left bg-gray-200">Supplier</th>
-            <th class="p-3 text-left bg-gray-200">Address</th>
-            <th class="p-3 text-left bg-gray-200">Email</th>
-            <th class="p-3 text-left bg-gray-200">Phone</th>
-            <th class="p-3 text-left bg-gray-200">Action</th>
-        </tr>
+      <tr>
+        <th class="p-3 text-left bg-gray-200">#</th>
+        <th class="p-3 text-left bg-gray-200">Supplier</th>
+        <th class="p-3 text-left bg-gray-200">Address</th>
+        <th class="p-3 text-left bg-gray-200">Email</th>
+        <th class="p-3 text-left bg-gray-200">Phone</th>
+        <th class="p-3 text-left bg-gray-200">Action</th>
+      </tr>
     </thead>
     <tbody>
-        <tr class="border-2" *ngFor="let supplier of suppliers; let index = index;">
-            <td class="p-3 border-2">{{index+1}}</td>
-            <td class="p-3 border-2">{{supplier.name}}</td> 
-            <td class="p-3 border-2">{{supplier.address}}</td>
-            <td class="p-3 border-2">{{supplier.email}}</td>
-            <td class="p-3 border-2">{{supplier.phone}}</td>
-        </tr>
+      <tr
+        class="border-2"
+        *ngFor="let supplier of visibleData(); let index = index"
+      >
+        <td class="p-3 border-2">{{ index + 1 }}</td>
+        <td class="p-3 border-2">{{ supplier.name }}</td>
+        <td class="p-3 border-2">{{ supplier.address }}</td>
+        <td class="p-3 border-2">{{ supplier.email }}</td>
+        <td class="p-3 border-2">{{ supplier.phone }}</td>
+      </tr>
     </tbody>
-</table>
+  </table>
 
-<div class="mt-4 flex items-center justify-center">
-    <button class="text-cyan-500 border-4 py-2 px-4 rounded-l-lg cursor-pointer mr-5">Previous</button>
-    <button class="py-2 px-4 cursor-pointer bg-cyan-500 text-white">1</button>
-    <button class="text-cyan-500 border-4 py-2 px-4 rounded-r-lg cursor-pointer ml-5">Next</button>
-</div>
+  <div class="mt-4 flex items-center justify-center">
+    <button
+      (click)="previousPage()"
+      class="text-cyan-500 border-4 py-2 px-4 rounded-l-lg cursor-pointer mr-5"
+    >
+      Previous
+    </button>
+    <button
+      *ngFor="let pageNumber of pageNumbers(); let i = index"
+      class="py-2 px-4 cursor-pointer"
+      [class.bg-cyan-500]="i + 1 == currentPage"
+      [class.text-white]="i + 1 == currentPage"
+      (click)="changePage(i + 1)"
+    >
+      {{ i + 1 }}
+    </button>
+    <button
+      (click)="nextPage()"
+      class="text-cyan-500 border-4 py-2 px-4 rounded-r-lg cursor-pointer ml-5"
+    >
+      Next
+    </button>
+  </div>
 </div>
