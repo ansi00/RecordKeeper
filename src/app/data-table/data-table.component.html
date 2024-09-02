@@ -4,11 +4,11 @@
       class="w-full border p-2 rounded-lg"
       type="text"
       placeholder="search"
-      name=""
-      id=""
+      #filter
+      (keyup)="filterData(filter.value)"
     />
-    <select class="border p-2 rounded-lg">
-      <option value="">Test</option>
+    <select class="border p-2 rounded-lg" #pageSize (change)="changePageSize(pageSize.value)" >
+      <option *ngFor="let size of pageSizes" [value]="size">{{size}}</option>
     </select>
   </div>
 

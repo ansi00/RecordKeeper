@@ -147,15 +147,17 @@ export class DataTableComponent implements OnInit {
 
   currentPage: number = 1;
   pageSize: number = 5;
+  filteredSuppliers : Array<Supplier> = this.suppliers;
+  pageSizes : Array <number> = [5,10,20]
 
   ngOnInit(): void {
     this.visibleData();
     this.pageNumbers();
   }
-  visibleData() {
+  visibleData(): Array<Supplier> {
     let startIndex = (this.currentPage - 1) * this.pageSize;
     let endIndex = startIndex + this.pageSize;
-    return this.suppliers.slice(startIndex, endIndex);
+    return this.filteredSuppliers.slice(startIndex, endIndex);
   }
 
   nextPage() {
@@ -168,7 +170,7 @@ export class DataTableComponent implements OnInit {
   }
 
   pageNumbers() {
-    let totalPages = Math.ceil(this.suppliers.length / this.pageSize);
+    let totalPages = Math.ceil(this.filteredSuppliers.length / this.pageSize);
     let pageNumArray = new Array(totalPages);
     return pageNumArray;
   }
@@ -176,5 +178,20 @@ export class DataTableComponent implements OnInit {
   changePage(pageNumber: number) {
     this.currentPage = pageNumber;
     this.visibleData();
+  }
+
+  filterData(searchTerm: string) {
+    this.filteredSuppliers = this.suppliers.filter((item) => {
+      return Object.values(item).some((val) =>
+        val.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+    this.currentPage = 1; 
+  }
+
+
+  changePageSize(pageSize:any){
+this.pageSize = pageSize ;
+this.visibleData();
   }
 }
